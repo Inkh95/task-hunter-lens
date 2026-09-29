@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1424">
+  <title>Task Hunter Lens — find the better opportunity</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar"><div class="brand"><span class="mark">✳</span> TASK HUNTER <b>LENS</b></div><span class="badge">DECISION BOARD · LOCAL ONLY</span></header>
+    <section class="hero">
+      <div><p class="eyebrow">PAID TASK TRIAGE</p><h1>Choose work by its <em>realistic return.</em></h1><p class="lead">A big reward means little if acceptance is unlikely or the work takes days. Compare the assumptions, then decide where to spend your time.</p></div>
+      <div class="hero-note"><span>THE RULE</span><strong>Expected net € / hour</strong><p>(Reward − fees) × acceptance chance × payout chance ÷ hours</p><small>Your estimates, not a payment guarantee.</small></div>
+    </section>
+    <div id="notice" class="notice" role="status" hidden></div>
+    <section class="workspace">
+      <div class="panel entry">
+        <div class="section-heading"><div><p class="eyebrow">01 / INPUT</p><h2>Add an opportunity</h2></div></div>
+        <p class="muted">Enter a listing and your best estimates. You can revise them at any time.</p>
+        <form id="task-form" novalidate>
+          <input type="hidden" name="id">
+          <label>Task title <span>required</span><input name="title" maxlength="100" placeholder="e.g. Fix checkout bug" required></label>
+          <div class="grid-two"><label>Source<input name="source" maxlength="50" placeholder="e.g. GitHub bounty"></label><label>Listing URL<input name="url" type="url" placeholder="https://…"></label></div>
+          <div class="grid-two"><label>Reward (€)<input name="reward" type="number" min="0.01" step="0.01" value="100" required></label><label>Fees (€)<input name="fee" type="number" min="0" step="0.01" value="0" required></label></div>
+          <div class="grid-two"><label>Total hours<input name="hours" type="number" min="0.1" step="0.1" value="4" required></label><label>Deadline <span>optional</span><input name="deadline" type="date"></label></div>
+          <div class="grid-two"><label>Acceptance chance (%)<input name="acceptance" type="number" min="0" max="100" step="1" value="70" required></label><label>Payout chance (%)<input name="payout" type="number" min="0" max="100" step="1" value="90" required></label></div>
+          <p class="hint">Estimate conservatively. These are your judgments, not platform statistics.</p>
+          <div id="form-error" class="form-error" role="alert" hidden></div>
+          <div class="form-actions"><button type="submit" id="save-button" class="primary">Add to board <span>↗</span></button><button type="button" id="cancel-edit" class="quiet" hidden>Cancel edit</button></div>
+        </form>
+      </div>
+      <div class="board">
+        <div class="section-heading board-heading"><div><p class="eyebrow">02 / DECIDE</p><h2>Opportunity board <span id="count"></span></h2></div><button id="load-examples" class="outline" type="button">Load examples</button></div>
+        <div class="filter-row" role="group" aria-label="Filter tasks"><button class="filter active" data-filter="active" type="button">Active</button><button class="filter" data-filter="all" type="button">All</button><button class="filter" data-filter="paid" type="button">Paid</button></div>
+        <div id="task-list" aria-live="polite"></div>
+        <div class="method"><span class="method-icon">i</span><div><strong>How the ranking works</strong><p>We multiply the net reward by two probabilities and divide by your total hours. The result helps compare tasks; it does not predict a payment. Review the platform, scope, eligibility and deadline yourself before applying.</p></div></div>
+      </div>
+    </section>
+    <footer>Task Hunter Lens · A decision aid, not a verified job feed. Data stays in this browser.</footer>
+  </main>
+</body>
+</html>
